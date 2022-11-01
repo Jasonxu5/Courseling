@@ -33,7 +33,7 @@ def insert_entry():
 
   collection.insert_one(test_entry)
 
-# insert_entry()
+insert_entry()
 
 def insert_multiple_entries():
   courses = ["CS 110", "CS 220", "CS 330", "CS 440", "CS 550"]
