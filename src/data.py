@@ -1,3 +1,4 @@
+from tkinter import N
 from dotenv import load_dotenv, find_dotenv
 import os
 import pprint as printer
@@ -8,6 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 import unicodedata
+from output import prereqs_list
 
 load_dotenv(find_dotenv())
 
@@ -38,8 +40,7 @@ semesters = []
 years = []
 descriptions = []
 
-for i in range(79):
-  prereqs.append("N/A")
+prereqs = prereqs_list
 
 for a in soup.findAll('a', class_ = 'schedlink'):
   for b in a:
@@ -56,16 +57,20 @@ for a in soup.findAll('a', class_ = 'schedlink'):
       credits = b.text.find('credit')
       credit_hours.append(int(b.text[credits + 8]))
 
-# course_elements = []
-for c in soup.findAll('div', class_ = 'courseblock'):
-  for d in c:
-    level = c.find('a', class_ = 'schedlink')
-    level = int(level.text[3:6])
-    if level >= 300 and level < 500:
-      desc = c.find('p', class_ = 'courseblockdesc')
-      desc = unicodedata.normalize("NFKD", desc.text)
-      desc = desc.strip()
-      descriptions.append(desc)
+# for course in soup.findAll('div', class_ = 'courseblock'):
+#   preq = []
+#   level = course.find('a', class_ = 'schedlink')
+#   level = int(level.text[3:6])
+#   if level >= 300 and level < 500:
+#     prereq = course.select('p.courseblockdesc > a')
+#     for _ in prereq:
+#       curr = unicodedata.normalize("NFKD", _.text)
+#       preq.append(curr)
+#     prereqs.append(preq)
+
+# with open('output.txt', 'w') as f:
+#   for line in prereqs:
+#     f.write(f"{line}\n")
 
 driver.get('https://cs.illinois.edu/academics/courses')
 driver.find_element(By.XPATH, '//*[@id="tcat-tab"]').click()
@@ -84,18 +89,21 @@ for i in courses:
   soup = BeautifulSoup(page_source, 'html.parser')
   instructor = soup.select_one('td.extCoursesTTinstr > a')
   date = soup.select_one('h3')
+  desc = soup.select_one('div#extCoursesDescription > div.extCoursesProfileContent')
 
-  if instructor != None and date != None:
+  if instructor != None and date != None and desc != None:
     professors.append(instructor.text)
     semester = date.text.split()[0]
     year = date.text.split()[1]
 
     semesters.append(semester)
     years.append(int(year))
+    descriptions.append(desc.text)
   else:
     professors.append("N/A")
     semesters.append("N/A")
     years.append("N/A")
+    descriptions.append("N/A")
 
 
 print(courses)
