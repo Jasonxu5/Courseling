@@ -85,7 +85,7 @@ def add_review(course_id, review):
   )
 
 # Change the course_id
-# add_review("6359e4235cb1963f485d00c0", "Interesting course to learn about text retrieval and NLP. Highly recommended!")
+add_review("63606b8c3c11c14f3f2903bf", "Interesting course to learn about text retrieval and NLP. Highly recommended!")
 
 def add_review_as_relationship(course_id, review):
   from bson.objectid import ObjectId
