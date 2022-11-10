@@ -190,7 +190,7 @@ def five_courses():
   2022,2015,2021,2015,2019,2016,2015,2019,2022,2016,2019,2022,2019,2022,2022,2019,2022,2022,2022,2022,2014,2019,2019,NA,2017,2021,2022,2019,2021,\
   2021,2021,2022,2019,2022,2017,2014,2016,2017,2022,2019,2021,2021,2021,2022,2021,2021,2021,2021,2022,2020,2013,2020,2020,2022,2020,2022,2019,2016,\
   2017,2016,2022,2021,2021,2021,2022,2020,2021,2022,2017,2022,2021,2021,2020,2021,2018,2018,2022,2021]
-  
+
   professors = [["Katie Cunningham", "Geoffrey Lindsay Herman"],"Steven Lumetta","ChengXiang Zhai","Yongjoo Park","Hanghang Tong","Ashley L Hetrick","Eric Gene Shaffer",\
   ["Madhusudan Parthasarathy","Gagandeep Singh"],"Grigore Rosu","Tianyin Xu","Jose Meseguer","Indranil Gupta","Charith Mendes","Darko Marinov",["Craig Zilles","Chase Aaron Geigle"],\
   "Josep Torrellas","Josep Torrellas","Zbigniew T Kalbarczyk","Klara Nahrstedt","Brighten Godfrey","Matus Jan Telgarsky","Mohammad Noureddine","Nan Jiang","Svetlana Lazebnik",\
@@ -209,7 +209,7 @@ def five_courses():
   "Vikram Adve","Lawrence Rauchwerger","Laxmikant V Kale","Michael A Forbes","Manoj M Prabhakaran","Mohammed El-Kebir","Madhusudan Parthasarathy","Sanmi Koyejo",\
   "Adam Bates","Lawrence Rauchwerger","Paris Smaragdis","Michael A Forbes","Ranjitha Kumar","Lui Sha","Saurabh Gupta","Saurabh Gupta","Shenlong Wang","Saurabh Sinha",\
   ["Sarita V Adve","Elsa Gunter"],"Tarek Abdelzaher","Matus Jan Telgarsky","Timothy Moon-Yew Chan","Deepak Vasisht"]
-  
+
   prereqs = [NA,["ECE408","CS420"],["CS 410","CS 412","CS 446","LING 406"],"CS 411","CS 412",NA,"CS 418",["CS 374","CS 421"],["CS 422","CS 426"],["CS 423","CS 425","CS 433"],\
   ["CS 422","CS 475","CS 476"],["CS 423","CS 425","CS 438"],"CS 426",["CS 428", "CS 429"],"CS 427","CS 433","CS 433","ECE 411",["CS 425", "CS 438"],"CS 438",NA,["ECE 313", "MATH 461", "MATH 463"],\
   NA,["ECE 448","CS 225"],["CS 450","CS 473"],["MATH 415","CS 361","MATH 461","STAT 400"],["CS 446", "CS 447"],"CS 446",["CS 440","CS 446"],"Minimally second semester graduate standing in a cognitive science discipline including: anthropology, computer science, educational psychology, electrical engineering, linguistics, philosophy, psychology, or consent of instructor.",\
@@ -218,7 +218,7 @@ def five_courses():
   NA,NA,NA,["CS 598IG","CS 425"],NA,NA,NA,["CS 412","CS 512","CS 446","CS 411"],NA,["CS 598IG","CS 425"],NA,["CS 476","CS 477"],NA,NA,NA,NA,["CS 225","CS 423"],NA,NA,NA,NA,NA,\
   ["CS 573","CS 579"],NA,NA,NA,"CS 225",NA,NA,["CS 225","CS 446","CS 498"],"CS 225",NA,NA,NA,"CS 225",NA,"CS 573",NA,NA,NA,NA,NA,"CS 225","CS 225",NA,NA,NA,["CS 225","CS 446"],\
   "CS 225",NA,NA,["CS 446","CS 498","LING 406","CS 546"],NA,NA,"CS 225",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"CS 225",NA,NA,NA,NA,NA,NA,"CS 225",NA,NA,NA,NA,NA,NA]
-  
+
   descriptions = ["Current research topics and theories in Computers and Education with an emphasis on learning theories such as constructivism, behaviorism, cognitivism, knowledge-in-pieces, test-potentiated learning, and transfer of learning. These theories will be applied to understanding how students learn computing topics such as programming and theoretical computing. These topics will be applied through the design of ethically responsible educational research studies. The course will culminate in students writing a research proposal or conference-style research paper based upon pilot data. Course Information: 4 graduate hours. No professional credit. May be repeated if topics vary. Credit towards a degree from multiple offerings of this course is not given if those offerings have significant overlap, as determined by the CS department.",\
   "Algorithm techniques for enhancing the scalability of parallel software: scatter vs. gather, problem decomposition, spatial sorting and binning, privatization for reduced conflicts, tiling for data locality, regularization for improved load balance, compaction to conserve memory bandwidth, double-buffering to overlap latencies, and data layout for improved efficiecy of DRAM accesses.", \
   "Advanced concepts, models, and algorithms in information retrieval and major recent developments in the field, including historical milestones in information retrieval research, evaluation methodology, vector space retrieval model, probabilistic retrieval models, learning to rank algorithms, probabilistic topic models, information retrieval systems, text analytics, and topics of research frontiers in information retrieval. Course Information: 4 graduate hours. No professional credit. Prerequisite: One of CS 410, CS 412, CS 446 or LING 406.", \
@@ -353,7 +353,7 @@ def five_courses():
   "This course will cover both basic material and certain advanced topics in machine learning theory. The core of the course will investigate the standard statistical learning theory model, along with its usual decoupling into representation, optimization, and generalization. The course will also touch on other learning models, for instance active learning and online learning. Specific material will include neural networks, linear regression, SVMs, boosting, consistency, VC dimension, Rademacher complexity, dimensionality reduction, and k-means. Grades will be based on homework and a final project. Prerequisites: basic probability, basic linear algebra.", \
   "In undergraduate algorithms classes, you have studied classical problems such as all-pairs shortest paths, longest common subsequence, edit distance, 3SUM, subset sum, triangles in graphs, etc. Have you ever wondered whether the textbook algorithms you have learned could be improved, or whether they are in fact the best possible? Here, we are interested not just in determining whether the problems are polynomial-time solvable, but in their fine-grained complexity (quadratic time? cubic time? etc.). We will describe the latest theoretical techniques for obtaining (slightly) improved algorithms for these classical problems and their variants (in general as well as important special cases). We will also prove conditional lower bounds via reductions that relate the fine-grained complexity of one problem to another. For up-to-date information about CS course restrictions, please see the following link: http://go.cs.illinois.edu/csregister", \
   "This graduate-level seminar will cover the latest research in the Internet of Things from a networked systems perspective. We will discuss advances in foundational networking and systems design techniques for the Internet of Things and highlight novel inference approaches to connect the underlying data to its end applications. Students will experience and possibly build applications on top of novel IoT platforms in digital healthcare, data-driven agriculture, ocean sensing, autonomous vehicles, security, satellites, and others."]
-  
+
 
   names = set()
   for i in courses:
@@ -370,4 +370,4 @@ def five_courses():
 
   collection.insert_many(docs)
 
-five_courses()
+# five_courses()
