@@ -15,27 +15,26 @@ def load_ranker(cfg_file):
     """
     return metapy.index.OkapiBM25()
 
-if __name__ == '__main__':
-    cfg = 'config.toml'
+def search(cfg_file, search_phrase):
     print('Building or loading index...')
 
     #Create the inverted index for the dataset
-    idx = metapy.index.make_inverted_index(cfg)
+    idx = metapy.index.make_inverted_index(cfg_file)
 
     #Check idx
-    print("# docs in idx: " + str(idx.num_docs()))
-    print("# unique terms in idx: " + str(idx.unique_terms()))
-    print("Avg doc length in idx: " + str(idx.avg_doc_length()))
-    print("Total corpus terms in idx: " + str(idx.total_corpus_terms()))
+    print("# docs in idx: ", str(idx.num_docs()))
+    print("# unique terms in idx: ", str(idx.unique_terms()))
+    print("Avg doc length in idx: ", str(idx.avg_doc_length()))
+    print("Total corpus terms in idx: ", str(idx.total_corpus_terms()))
 
     #Create Ranker object
-    ranker = load_ranker(cfg)
+    ranker = load_ranker(cfg_file)
 
     # No relevance judgements for the queries?
     # ev = metapy.index.IREval(cfg)
 
     #Set paths
-    with open(cfg, 'r') as fin:
+    with open(cfg_file, 'r') as fin:
         cfg_d = pytoml.load(fin)
 
     query_cfg = cfg_d['query-runner']
@@ -50,11 +49,12 @@ if __name__ == '__main__':
 
     #Create Document object and set its content with the query
     query = metapy.index.Document()
-    query.content('text systems')
+    query.content(search_phrase.strip())
 
     #Search index using the ranker and query
     top_docs = ranker.score(idx, query, num_results=2)
-    print(top_docs)
+    print("Query: ", str(search_phrase))
+    print("Search results: ", str(top_docs))
 
     # ndcg = 0.0
     # num_queries = 0
@@ -68,3 +68,15 @@ if __name__ == '__main__':
     # ndcg= ndcg / num_queries
     # print("NDCG@{}: {}".format(top_k, ndcg))
     # print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
+    return top_docs
+
+
+
+
+if __name__ == '__main__':
+    # cfg = sys.argv[1]
+    cfg = 'config.toml'
+    query = 'test text info'
+    search_results = search(cfg, query)
+
+    
