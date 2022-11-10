@@ -11,6 +11,8 @@ import time
 import unicodedata
 from output import prereqs_list
 
+#Testing
+
 load_dotenv(find_dotenv())
 
 password = os.environ.get("MONGODB_PASS")
