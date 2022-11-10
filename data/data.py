@@ -44,7 +44,10 @@ prereqs = prereqs_list
 
 for a in soup.findAll('a', class_ = 'schedlink'):
   for b in a:
-    course_level = int(b.text[3:6])
+    try:
+      course_level = int(b.text[3:6])
+    except ValueError:
+      continue
     if course_level >= 300 and course_level < 500:
       course_name = unicodedata.normalize("NFKD", b.text[:6])
       courses.append(course_name)
@@ -55,6 +58,11 @@ for a in soup.findAll('a', class_ = 'schedlink'):
         levels.append(400)
 
       credits = b.text.find('credit')
+      try:
+        hours = int(b.text[credits+8])
+      except ValueError:
+        credit_hours.append(4)
+        continue
       credit_hours.append(int(b.text[credits + 8]))
 
 # for course in soup.findAll('div', class_ = 'courseblock'):
@@ -125,8 +133,8 @@ def one_to_two_courses():
   "Navigating the complex ethical and professional landscape of the computing professional: privacy, intellectual property, cybersecurity, and freedom of speech. Hands-on exercises, assignments, and discussions in which students analyze current events from perspectives in both philosophical and professional ethics. Writing professionally and technically in several writing assignments requiring peer review, workshops, and multiple rounds of editing and revising.",
   "Design and implementation of novel software solutions. Problem identification and definition; idea generation and evaluation; and software implementation, testing, and deployment. Emphasizes software development best practices?including framework selection, code review, documentation, appropriate library usage, project management, continuous integration and testing, and teamwork.",
   "Data abstractions: elementary data structures (lists, stacks, queues, and trees) and their implementation using an object-oriented programming language. Solutions to a variety of computational problems such as search on graphs and trees. Elementary analysis of algorithms",
-  "Fundamentals of computer architecture: digital logic design, working up from the logic gate level to understand the function of a simple computer; machine-level programming to understand implementation of high-level languages; performance models of modern computer architectures to enable performance optimization of software; hardware primitives for parallelism and security."] 
-  
+  "Fundamentals of computer architecture: digital logic design, working up from the logic gate level to understand the function of a simple computer; machine-level programming to understand implementation of high-level languages; performance models of modern computer architectures to enable performance optimization of software; hardware primitives for parallelism and security."]
+
   professors = ["Ryan Matthew Cunningham","Ryan Matthew Cunningham","Michael Joseph Woodley",["Graham Carl Evans","Wade A Fagen-Ulmschneider"],["Geoffrey Lindsay Herman","Craig Zilles"]]
   credit_hours = [[2,3],[2,3],1,4,4]
   prerequisites = ["CS 225","CS 225","CS 128",["CS 126","CS 128 ","ECE 220", "CS 173", "MATH 213","MATH 347","MATH 412", " MATH 413"],["CS 125","CS 128","CS 173","MATH 213"]]
@@ -137,14 +145,15 @@ def one_to_two_courses():
 
   for name, lev, desc, professor, credit_hour, prereq, sem, yr in zip(courses, levels, descriptions, professors, credit_hours,prerequisites,semesters,years):
     doc = {"name": name, "level": lev,  "professor": professor,
-          "credit hours": credit_hour, "prereq": prereq, 
+          "credit hours": credit_hour, "prereq": prereq,
           "semester":sem, "year":yr, "description": desc}
     docs.append(doc)
 
   collection.insert_many(docs)
 
-one_to_two_courses()
+# one_to_two_courses()
 
+collection = database.courses
 def three_to_four_courses():
   docs = []
 
@@ -154,7 +163,7 @@ def three_to_four_courses():
 
   collection.insert_many(docs)
 
-three_to_four_courses()
+# three_to_four_courses()
 
 
 def five_courses():
