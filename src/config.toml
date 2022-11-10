@@ -1,0 +1,16 @@
+prefix = "."
+stop-words = "stopwords.txt"
+
+dataset = "courses"
+corpus = "line.toml"
+index = "idx"
+store-full-text = true
+
+[[analyzers]]
+method = "ngram-word"
+ngram = 1
+filter = "default-unigram-chain"
+
+[query-runner]
+query-path = "course-queries.txt"
+query-id-start = 1
