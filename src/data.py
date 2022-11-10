@@ -119,9 +119,32 @@ print(len(years))
 # print(prereqs)
 
 def one_to_two_courses():
-  return
+  courses = ["CS 210", "CS 211" , "CS 222", "CS 225", "CS 233"]
+  levels = [200, 200, 200, 200, 200]
+  descriptions = ["Ethics for the computing profession. Ethical decision-making; licensing; intellectual property, freedom of information, and privacy. Course Information: Credit is not given for both CS 210 and either CS 211 or ECE 316. Prerequisite: CS 225. Junior standing required.",
+  "Navigating the complex ethical and professional landscape of the computing professional: privacy, intellectual property, cybersecurity, and freedom of speech. Hands-on exercises, assignments, and discussions in which students analyze current events from perspectives in both philosophical and professional ethics. Writing professionally and technically in several writing assignments requiring peer review, workshops, and multiple rounds of editing and revising.",
+  "Design and implementation of novel software solutions. Problem identification and definition; idea generation and evaluation; and software implementation, testing, and deployment. Emphasizes software development best practices?including framework selection, code review, documentation, appropriate library usage, project management, continuous integration and testing, and teamwork.",
+  "Data abstractions: elementary data structures (lists, stacks, queues, and trees) and their implementation using an object-oriented programming language. Solutions to a variety of computational problems such as search on graphs and trees. Elementary analysis of algorithms",
+  "Fundamentals of computer architecture: digital logic design, working up from the logic gate level to understand the function of a simple computer; machine-level programming to understand implementation of high-level languages; performance models of modern computer architectures to enable performance optimization of software; hardware primitives for parallelism and security."] 
+  
+  professors = ["Ryan Matthew Cunningham","Ryan Matthew Cunningham","Michael Joseph Woodley",["Graham Carl Evans","Wade A Fagen-Ulmschneider"],["Geoffrey Lindsay Herman","Craig Zilles"]]
+  credit_hours = [[2,3],[2,3],1,4,4]
+  prerequisites = ["CS 225","CS 225","CS 128",["CS 126","CS 128 ","ECE 220", "CS 173", "MATH 213","MATH 347","MATH 412", " MATH 413"],["CS 125","CS 128","CS 173","MATH 213"]]
+  semesters = ["Fall","Fall","FALL","FALL","FALL"]
+  years = ["2022","2022", "2022", "2022", "2022"]
 
-collection = database.test
+  docs = []
+
+  for name, lev, desc, professor, credit_hour, prereq, sem, yr in zip(courses, levels, descriptions, professors, credit_hours,prerequisites,semesters,years):
+    doc = {"name": name, "level": lev,  "professor": professor,
+          "credit hours": credit_hour, "prereq": prereq, 
+          "semester":sem, "year":yr, "description": desc}
+    docs.append(doc)
+
+  collection.insert_many(docs)
+
+one_to_two_courses()
+
 def three_to_four_courses():
   docs = []
 
