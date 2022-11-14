@@ -26,7 +26,7 @@ def members():
 
 @app.route("/")
 def home():
-    collection = database.courses
+    collection = database
     cursor = collection.find({})
     return json.loads(json_util.dumps([document for document in cursor]))
 
