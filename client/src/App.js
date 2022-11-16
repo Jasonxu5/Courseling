@@ -1,33 +1,30 @@
-// RUN python server.py then in another terminal npm start
-// npm build and load unpacked in chrome extensions to run extension
-// making into extensions doesnt work. how to make app.js rendering to a html?
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+
+const apiEndpoint = "http://localhost:5000/"
 
 function App() {
-  const [data, setData] = useState([{}])
+  const [input, setInput] = useState('')
+  const [html, set_html] = useState(null)
 
-  useEffect(() => {
-    fetch("http://localhost:3000/members").then(
-      res => res.json()
-    ).then(
-      data => {
-        setData(data)
-        console.log(data)
-      }
+  const handleButtonClicked = async () => {
+    let searchQuery = input
+
+    let response = await fetch(apiEndpoint + `courses?query=${searchQuery}`);
+    let json = await response.json()
+
+    set_html(
+      <div>
+        <p>{json.description}</p>
+      </div>
     )
-  }, [])
+  }
 
   return (
     <div>
-
-      {(typeof data.members === 'undefined') ? (
-        <p>Loading...</p>
-      ) : (
-        data.members.map((member, i) => (
-          <p key={i}>{member}</p>
-        ))
-      )}
-
+      <label>Input an query:</label>
+      <input type="text" value={input} onChange={e => setInput(e.target.value)} />
+      <button onClick={() => { handleButtonClicked() }}>Submit</button>
+      {html}
     </div>
   )
 }
