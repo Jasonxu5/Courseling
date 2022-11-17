@@ -1,11 +1,14 @@
 """
-Needs dataset in MeTA format (*.dat) with courses folder
-This function creates a ranked list of (doc_id, score) pairs in relation to a query
+To do: How to input a query dynamically?
+To do: Need to cd into data folder for the script to "config.toml". How to bypass this?
+To do: How/what format to pass ranked list to flask?
+This function creates a ranked list of (mongodb_id, ranking score) pairs in relation to a query
 """
 
 import metapy
 import pytoml
 import sys
+import pandas as pd
 
 def load_ranker(cfg_file):
     """
@@ -52,7 +55,7 @@ def search(cfg_file, search_phrase):
     query.content(search_phrase.strip())
 
     #Search index using the ranker and query
-    top_docs = ranker.score(idx, query, num_results=2)
+    top_docs = ranker.score(idx, query, num_results=5)
     print("Query: ", str(search_phrase))
     print("Search results: ", str(top_docs))
 
@@ -74,9 +77,22 @@ def search(cfg_file, search_phrase):
 
 
 if __name__ == '__main__':
-    # cfg = sys.argv[1]
+    #cfg = sys.argv[1]
     cfg = 'config.toml'
-    query = 'test text info'
+    query = 'What courses are taught by Tianyin Xu?'
     search_results = search(cfg, query)
 
-    
+    #Get the mongodb ID that corresponds to ranked search_results ID
+    columns = ['id','_id','name']
+    course_data = pd.DataFrame(columns=columns)
+    with open('courses/courses.dat') as f:
+        for line in f:
+            course_data.loc[len(course_data)] = line.split(",")[:3]
+    #print(course_data)
+
+    db_search_results = []
+    if search_results:
+        for result in search_results:
+            index = result[0]
+            db_search_results.append((course_data.iloc[index]['_id'], result[1]))
+    print("Search results w/ Mongo DB id: ", db_search_results)
