@@ -6,6 +6,8 @@ corpus = "line.toml"
 index = "idx"
 store-full-text = true
 
+query-judgements = "qrels.txt"
+
 [[analyzers]]
 method = "ngram-word"
 ngram = 1
