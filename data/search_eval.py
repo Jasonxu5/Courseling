@@ -33,8 +33,8 @@ def search(cfg_file, search_phrase):
     #Create Ranker object
     ranker = load_ranker(cfg_file)
 
-    # No relevance judgements for the queries?
-    # ev = metapy.index.IREval(cfg)
+    #Evaluate relevance judgements for the queries
+    ev = metapy.index.IREval(cfg_file)
 
     #Set paths
     with open(cfg_file, 'r') as fin:
@@ -46,9 +46,8 @@ def search(cfg_file, search_phrase):
         sys.exit(1)
     
     # start_time = time.time()
-    top_k = 10
-    query_path = query_cfg.get('query-path', 'queries.txt')
-    query_start = query_cfg.get('query-id-start', 0)
+    query_path = query_cfg.get('query-path', 'course-queries.txt')
+    query_start = query_cfg.get('query-id-start', 1)
 
     #Create Document object and set its content with the query
     query = metapy.index.Document()
@@ -58,19 +57,27 @@ def search(cfg_file, search_phrase):
     top_docs = ranker.score(idx, query, num_results=5)
     print("Query: ", str(search_phrase))
     print("Search results: ", str(top_docs))
-
-    # ndcg = 0.0
-    # num_queries = 0
-    # print('Running queries')
-    # with open(query_path) as query_file:
-    #     for query_num, line in enumerate(query_file):
-    #         query.content(line.strip())
-    #         results = ranker.score(idx, query, top_k)
-    #         ndcg += ev.ndcg(results, query_start + query_num, top_k)
-    #         num_queries+=1
-    # ndcg= ndcg / num_queries
-    # print("NDCG@{}: {}".format(top_k, ndcg))
-    # print("Elapsed: {} seconds".format(round(time.time() - start_time, 4)))
+    
+    #Runs stats for batch of queries in course-queries.txt
+    num_queries = 0
+    qresults = []
+    print('Running queries')
+    with open(query_path) as query_file:
+        for query_num, line in enumerate(query_file):
+            query.content(line.strip())
+            results = ranker.score(idx, query, num_results=5)
+            # print("search results:", results)
+            q_precision = ev.precision(results, query_start + query_num, 5)
+            q_recall = ev.recall(results, query_start + query_num, 5)
+            q_f1 = ev.f1(results, query_start + query_num, 5)
+            q_avg_p = ev.avg_p(results, query_start + query_num, 5)
+            num_queries+=1
+            qresults.append(q_avg_p)
+            print("Query {} average precision: {}".format(query_num + 1, q_avg_p))
+            print("Query {} precision: {}".format(query_num + 1, q_precision))
+            print("Query {} recall: {}".format(query_num + 1, q_recall))
+            print("Query {} F1 score: {}".format(query_num + 1, q_f1))
+    # ev.map()
     return top_docs
 
 
@@ -79,7 +86,7 @@ def search(cfg_file, search_phrase):
 if __name__ == '__main__':
     #cfg = sys.argv[1]
     cfg = 'config.toml'
-    query = 'What courses are taught by Tianyin Xu?'
+    query = 'which courses teach data mining'
     search_results = search(cfg, query)
 
     #Get the mongodb ID that corresponds to ranked search_results ID
