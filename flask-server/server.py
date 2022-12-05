@@ -1,4 +1,5 @@
 import json
+from os import path
 import os
 
 import flask
@@ -8,6 +9,12 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
+import sys
+
+# file_path = path.dirname(path.dirname(__file__))
+# sys.path.insert(0, file_path + '\\data')
+# from search_eval import query
+import subprocess
 
 app = Flask(__name__)
 CORS(app)
@@ -34,13 +41,21 @@ def home():
 def courses():
     args = request.args
     type(args.to_dict())
-    query = args.get("query")
+    input = args.get("query")
+    input = '"' + input + '"'
     try:
-        course = database.find_one({"name": query})
-        print(course['description'])
+        # course = database.find_one({"name": query})
+        # print(course['description'])
+        # output = query(input)
+        subprocess.call(f"python search_eval.py {input}")
+        file = open('results.txt', 'r')
+        data = file.read()
     except TypeError:
-        return {"description": "Course not found"}
-    return json.loads(json_util.dumps(course))
+        return {"description" : "Query not found"}
+        # return {"description": "Course not found"}
+    dataTest = json.loads(data)
+    print(dataTest)
+    return json.loads(data)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -9,6 +9,7 @@ import metapy
 import pytoml
 import sys
 import pandas as pd
+import json
 
 def load_ranker(cfg_file):
     """
@@ -44,7 +45,7 @@ def search(cfg_file, search_phrase):
     if query_cfg is None:
         print("query-runner table needed in {}".format(cfg))
         sys.exit(1)
-    
+
     # start_time = time.time()
     query_path = query_cfg.get('query-path', 'course-queries.txt')
     query_start = query_cfg.get('query-id-start', 1)
@@ -57,7 +58,7 @@ def search(cfg_file, search_phrase):
     top_docs = ranker.score(idx, query, num_results=5)
     print("Query: ", str(search_phrase))
     print("Search results: ", str(top_docs))
-    
+
     #Runs stats for batch of queries in course-queries.txt
     num_queries = 0
     qresults = []
@@ -80,14 +81,11 @@ def search(cfg_file, search_phrase):
     # ev.map()
     return top_docs
 
-
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     #cfg = sys.argv[1]
     cfg = 'config.toml'
-    query = 'which courses teach data mining'
-    search_results = search(cfg, query)
+    input = sys.argv[1]
+    search_results = search(cfg, input)
 
     #Get the mongodb ID that corresponds to ranked search_results ID
     columns = ['id','_id','name']
@@ -97,9 +95,12 @@ if __name__ == '__main__':
             course_data.loc[len(course_data)] = line.split(",")[:3]
     #print(course_data)
 
-    db_search_results = []
+    db_search_results = {}
     if search_results:
         for result in search_results:
             index = result[0]
-            db_search_results.append((course_data.iloc[index]['_id'], result[1]))
+            db_search_results[course_data.iloc[index]["name"]] =  result[1]
     print("Search results w/ Mongo DB id: ", db_search_results)
+    f = open("results.txt", "w")
+    f.write(json.dumps(db_search_results))
+    f.close()
