@@ -77,7 +77,7 @@ function App() {
 
   return (
     <div>
-      <label>Input an query:</label>
+      <label>Input a query:</label>
       <input type="text" value={input} onChange={e => setInput(e.target.value)} size="30" />
       <button onClick={() => { handleButtonClicked() }}>Submit</button>
       <div id="table"></div>

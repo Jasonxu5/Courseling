@@ -95,11 +95,11 @@ if __name__ == "__main__":
             course_data.loc[len(course_data)] = line.split(",")[:3]
     #print(course_data)
 
-    db_search_results = {}
+    db_search_results = []
     if search_results:
         for result in search_results:
             index = result[0]
-            db_search_results[course_data.iloc[index]["name"]] =  result[1]
+            db_search_results.append((course_data.iloc[index]['name'], result[1]))
     print("Search results w/ Mongo DB id: ", db_search_results)
     f = open("results.txt", "w")
     f.write(json.dumps(db_search_results))
