@@ -4,8 +4,6 @@ const apiEndpoint = "http://localhost:5000/"
 
 function App() {
   const [input, setInput] = useState('')
-  const [html, set_html] = useState(null)
-  const [table, set_table] = useState(null)
 
   const handleButtonClicked = async () => {
     let searchQuery = input
@@ -15,28 +13,31 @@ function App() {
 
     console.log(json)
 
-    let keys = Object.keys(json)
-    console.log(keys)
+    let parent = document.createElement("table")
+    let headers = document.createElement("tr")
+    let classHeader = document.createElement("th")
+    let scoreHeader = document.createElement("th")
+    classHeader.textContent = "Class"
+    scoreHeader.textContent = "Ranking Score"
+    headers.append(classHeader)
+    headers.append(scoreHeader)
 
-    let extTable = document.createElement("tr")
-    for (let i in keys) {
-      let row = document.createElement("th")
-      row.textContent = i
+    parent.append(headers)
+    for (let i in json) {
+      let extTable = document.createElement("tr")
+      let course = document.createElement("td")
+      let score = document.createElement("td")
+      course.textContent = i
+      score.textContent = json[i]
       // tr.insertCell().textContent = i
-      extTable.append(row)
+      extTable.append(course)
+      extTable.append(score)
+      parent.append(extTable)
     }
 
-    console.log(extTable)
+    console.log(parent)
 
-    set_table(
-      extTable
-    )
-
-    // set_html(
-    //   <div>
-    //     <p>{json.description}</p>
-    //   </div>
-    // )
+    document.getElementById('table').append(parent);
   }
 
   return (
@@ -44,14 +45,7 @@ function App() {
       <label>Input an query:</label>
       <input type="text" value={input} onChange={e => setInput(e.target.value)} />
       <button onClick={() => { handleButtonClicked() }}>Submit</button>
-      {html}
-      <table>
-        <tr>
-          <th>Class</th>
-          <th>Ranking Score</th>
-        </tr>
-        {table}
-      </table>
+      <div id="table"></div>
     </div>
   )
 }
