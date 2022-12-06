@@ -6,6 +6,8 @@ function App() {
   const [input, setInput] = useState('')
 
   const handleButtonClicked = async () => {
+    let table = document.getElementById('table')
+    table.innerHTML = null
     let searchQuery = input
 
     let response = await fetch(apiEndpoint + `courses?query=${searchQuery}`);
@@ -23,12 +25,17 @@ function App() {
     headers.append(scoreHeader)
 
     parent.append(headers)
-    for (let i in json) {
+    let courses = json.map(arr => arr[0])
+    let scores = json.map(arr => arr[1])
+
+    for (let i in courses) {
       let extTable = document.createElement("tr")
       let course = document.createElement("td")
       let score = document.createElement("td")
-      course.textContent = i
-      score.textContent = json[i]
+
+
+      course.textContent = courses[i]
+      score.textContent = scores[i]
       // tr.insertCell().textContent = i
       extTable.append(course)
       extTable.append(score)
@@ -37,7 +44,7 @@ function App() {
 
     console.log(parent)
 
-    document.getElementById('table').append(parent);
+    table.append(parent)
   }
 
   return (
