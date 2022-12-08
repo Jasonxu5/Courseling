@@ -47,7 +47,7 @@ The underlying architecture of the extension follows the client-server model. On
 8. pymongo - 4.3.2
 9. pytoml - 0.1.21
 10. python-dotenv - 0.21.0
-11. requests - 2.28.0
+11. requests - 2.22.0
 12. selenium - 4.7.2
 13. cmake - 3.25.0
 
