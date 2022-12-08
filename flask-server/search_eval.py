@@ -19,7 +19,7 @@ def load_ranker(cfg_file):
     """
     return metapy.index.OkapiBM25()
 
-def search(cfg_file, search_phrase):
+def search(cfg_file, search_phrase, course_data):
     print('Building or loading index...')
 
     #Create the inverted index for the dataset
@@ -55,9 +55,39 @@ def search(cfg_file, search_phrase):
     query.content(search_phrase.strip())
 
     #Search index using the ranker and query
-    top_docs = ranker.score(idx, query, num_results=5)
+    out = []
+    num_res = 5
+    while len(out) < 5:
+        top_docs = ranker.score(idx, query, num_results=num_res)
+        print (len(top_docs))
+        print (top_docs[-1][1])
+        for ret_idx in range(num_res):
+            includ = True
+            if ret_idx >= len(top_docs):
+                break
+            # print (ret_idx, top_docs[ret_idx])
+            index = top_docs[ret_idx][0]
+            # print (course_data.iloc[index]["name"])
+            for term_check in ["2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023"]:
+                if term_check in search_phrase and course_data.iloc[index]["year"] != term_check:
+                    includ = False
+            for term_check in ["Fall","Spring","Summer"]:
+                if term_check in search_phrase and course_data.iloc[index]["semester"] != term_check:
+                    includ = False
+            if "credit" in search_phrase or "credits" in search_phrase or "hour" in search_phrase or "hours" in search_phrase:
+                for term_check in [" 0 ", " 1 "," 2 "," 3 "," 4 "]:
+                    if term_check in search_phrase and term_check[1] not in course_data.iloc[index]["credits"]:
+                        # print (course_data.iloc[index]["name"], course_data.iloc[index]["credits"])
+                        # print (course_data.iloc[index]["credits"])
+                        includ = False
+            if includ:
+                out.append(top_docs[ret_idx])
+        if len(top_docs) < num_res:
+            break
+        num_res = 224
+    out = out[:5]
     print("Query: ", str(search_phrase))
-    print("Search results: ", str(top_docs))
+    print("Search results: ", str(out))
 
     #Runs stats for batch of queries in course-queries.txt
     num_queries = 0
@@ -79,27 +109,45 @@ def search(cfg_file, search_phrase):
             print("Query {} recall: {}".format(query_num + 1, q_recall))
             print("Query {} F1 score: {}".format(query_num + 1, q_f1))
     # ev.map()
-    return top_docs
+    return out
+
+def extract_next(line,idx):
+    ret = line[idx]
+    idx += 1
+    while idx < len(line) and line[idx][0] == " ":
+        ret += line[idx]
+        idx += 1
+    return ret, idx
 
 if __name__ == "__main__":
     #cfg = sys.argv[1]
     cfg = 'config.toml'
     input = sys.argv[1]
-    search_results = search(cfg, input)
+    # search_results = search(cfg, input)
 
     #Get the mongodb ID that corresponds to ranked search_results ID
-    columns = ['id','_id','name']
+    columns = ['id','_id','name','credits','semester','year']
     course_data = pd.DataFrame(columns=columns)
     with open('courses/courses.dat') as f:
         for line in f:
-            course_data.loc[len(course_data)] = line.split(",")[:3]
-    #print(course_data)
+            line_split = line.split(",")
+            curridx = 0
+            desc = []
+            for i in range (10):
+                ret, curridx = extract_next(line_split,curridx)
+                if i in [0,1,2,5,7,8]:
+                    desc.append(ret)
+            course_data.loc[len(course_data)] = desc
+    # print(course_data)
+
+    search_results = search(cfg, input, course_data)
 
     db_search_results = {}
     if search_results:
         for result in search_results:
             index = result[0]
             db_search_results[course_data.iloc[index]["name"]] =  result[1]
+    print("Query: ", str(input))
     print("Search results w/ Mongo DB id: ", db_search_results)
     f = open("results.txt", "w")
     f.write(json.dumps(db_search_results))
