@@ -14,7 +14,6 @@ Courseling is a Google Chrome extension that allows the user to perform searches
     1. Download and install the Anaconda version for Python 3.7
     2. Open a terminal and run `conda create -n Counseling python=3.7`
     3. Activate the environment using `conda activate Courseling`
-    4. Install package for cmake with `conda install cmake`
 4. Run command `pip install -r requirements.txt` which will install all the required Python modules
 5. Next, make sure you have npm installed (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 6. Navigate to the `client` folder and then run the command `npm run build`
@@ -42,8 +41,9 @@ The underlying architecture of the extension follows the client-server model. On
 6. pandas - 1.3.5
 7. pymongo - 4.3.2
 8. pytoml - 0.1.21
-9. requests - 2.22.0
+9. requests - 2.28.0
 10. selenium - 4.7.2
+11. cmake - 3.25.0
 
 
 ## Task Allocation
