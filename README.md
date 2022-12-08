@@ -5,6 +5,9 @@ Courseling is a Google Chrome extension that allows the user to perform searches
 1. The user can input an arbitrary query, receiving a ranked list of the Top 5 courses that are most relevant to the user's query.
 2. A specific course can be queried, which returns a detailed description of the course, including things like its credit hours, semesters offered, etc.
 
+## Important
+This extension has compatibility issues with MacOS computers that we've spent hours trying to fix but still cannot seem to resolve.
+Because of this, you **must** build and run the extension on a **Windows machine or VM**
 
 ## Build and Run the Extension
 1. Clone the repo to the desired directory (`git clone https://github.com/Jasonxu5/Courseling.git`)
