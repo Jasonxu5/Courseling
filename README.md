@@ -60,7 +60,7 @@ The underlying architecture of the extension follows the client-server model. On
 | :------------: | :------------: |
 | Data Collection/Manipulation | Andrew Ko, Jason Xu, Nick Chun, Sahil Agrawal |
 | Frontend UI | Andrew Ko, Jason Xu |
-| Flask Server | Sahil Agrawal, Sophia Yu |
+| Flask Server | Jason Xu, Sahil Agrawal, Sophia Yu |
 | Ranking Function | Sahil Agrawal, Sophia Yu |
 | Documentation | Jason Xu, Nick Chun |
 | Demonstration | Jason Xu, Nick Chun |
