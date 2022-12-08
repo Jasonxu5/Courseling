@@ -61,6 +61,9 @@ function App() {
     set_result(
       <div>
         <p>{json.description}</p>
+        <p>Last Taught in: {json.semester} {json.year}</p>
+        <p>Credit Hours: {json['credit hours']}</p>
+        <p>Professor: {json.professor}</p>
       </div>
     )
   }
