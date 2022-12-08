@@ -16,7 +16,7 @@ Courseling is a Google Chrome extension that allows the user to perform searches
     3. Activate the environment using `conda activate Courseling`
 4. Run command `pip install -r requirements.txt` which will install all the required Python modules
 5. Next, make sure you have npm installed (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-6. Navigate to the `client` folder and then run the command `npm run build`
+6. Navigate to the `client` folder and then run the commands `npm install` and `npm run build`
 7. The command should generate a new `build` folder in the client folder
 8. Go to `chrome://extensions` and make sure developer mode is enabled
 9. Click on the option to "Load unpacked" and select the `build` folder that you just generated
@@ -34,16 +34,17 @@ The underlying architecture of the extension follows the client-server model. On
 ### Technology/Library Usage
 1. MongoDB
 2. beautifulsoup4 - 4.11.1
-2. Flask - 2.2.2
-3. Flask_Cors - 3.0.10
-4. Flask_PyMongo - 2.3.0
-5. metapy - 0.2.13
-6. pandas - 1.3.5
-7. pymongo - 4.3.2
-8. pytoml - 0.1.21
-9. requests - 2.28.0
-10. selenium - 4.7.2
-11. cmake - 3.25.0
+3. Flask - 2.2.2
+4. Flask_Cors - 3.0.10
+5. Flask_PyMongo - 2.3.0
+6. metapy - 0.2.13
+7. pandas - 1.3.5
+8. pymongo - 4.3.2
+9. pytoml - 0.1.21
+10. python-dotenv - 0.21.0
+11. requests - 2.28.0
+12. selenium - 4.7.2
+13. cmake - 3.25.0
 
 
 ## Task Allocation
