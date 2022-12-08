@@ -142,11 +142,11 @@ if __name__ == "__main__":
 
     search_results = search(cfg, input, course_data)
 
-    db_search_results = {}
+    db_search_results = []
     if search_results:
         for result in search_results:
             index = result[0]
-            db_search_results[course_data.iloc[index]["name"]] =  result[1]
+            db_search_results.append((course_data.iloc[index]['name'], result[1]))
     print("Query: ", str(input))
     print("Search results w/ Mongo DB id: ", db_search_results)
     f = open("results.txt", "w")
