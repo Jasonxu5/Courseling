@@ -20,7 +20,7 @@ Please read the above note, this extension is only compatible with Windows machi
     - If you run `ls`, you should see the output of `client`, `data`, `flask-server`, etc.
 3. Setup a conda environment where Python is **version 3.7 or below**. This is very important. Otherwise, the metapy package will fail to install.
     1. Download and install the Anaconda version for Python 3.7
-    2. Open a terminal and run `conda create -n Courseling python=3.7`
+    2. Open a terminal and run `conda create -n Courseling python=3.7` (In case you don't have npm installed which is required in a later step, you can also run `conda create -n Courseling python=3.7 nodejs` instead)
     3. Activate the environment using `conda activate Courseling`
 4. Run command `pip install -r requirements.txt` which will install all the required Python modules
 5. Next, make sure you have npm installed (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
